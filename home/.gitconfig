@@ -1,0 +1,38 @@
+[core]
+	pager = delta
+	editor = nvim
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	features = catppuccin
+	navigate = true
+	line-numbers = true
+	side-by-side = false
+	hyperlinks = false
+
+[delta "catppuccin"]
+	syntax-theme = Catppuccin Mocha
+	file-style = bold "#cba6f7"
+	file-decoration-style = "#6c7086" ul
+	hunk-header-style = omit
+	line-numbers-left-style = "#6c7086"
+	line-numbers-right-style = "#6c7086"
+	line-numbers-minus-style = "#f38ba8"
+	line-numbers-plus-style = "#a6e3a1"
+	line-numbers-zero-style = "#45475a"
+	minus-style = syntax "#443244"
+	minus-emph-style = syntax "#6b2d43"
+	plus-style = syntax "#2c4034"
+	plus-emph-style = syntax "#3f6d4e"
+	blame-palette = "#1e1e2e" "#181825" "#313244" "#45475a"
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	colorMoved = default
+
+[init]
+	defaultBranch = main

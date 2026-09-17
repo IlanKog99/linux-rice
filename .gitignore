@@ -1,0 +1,10 @@
+# Tool tarballs are ~40 MB and live on the GitHub release instead; install.sh
+# downloads them on demand. vendor/SHA256SUMS IS tracked — it verifies that
+# download, so it must come from the repo, not from the tarball.
+vendor/*.tar.gz
+vendor/bin/
+
+# Local scratch
+*.bak
+*.bak-*
+.remember/

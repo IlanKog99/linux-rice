@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Shell + config lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: shellcheck
+        run: shellcheck install.sh windows/install-fonts.sh
+
+      - name: zsh syntax
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq zsh
+          for f in home/.zshrc home/.zshenv home/.zsh/*.zsh home/.p10k.zsh; do
+            zsh -n "$f" || exit 1
+          done
+
+      - name: lua syntax
+        run: |
+          sudo apt-get install -y -qq lua5.4
+          find home/.config/nvim -name '*.lua' -exec luac5.4 -p {} +
+
+      - name: jsonc parses
+        run: |
+          python3 - <<'PY'
+          import json, re, pathlib, sys
+          bad = 0
+          for p in pathlib.Path('home/.config').rglob('*.json*'):
+              raw = p.read_text(encoding='utf-8')
+              # strip // line comments that json.loads can't take
+              stripped = re.sub(r'(?m)^\s*//.*$', '', raw)
+              try:
+                  json.loads(stripped)
+              except Exception as e:
+                  print(f'{p}: {e}'); bad = 1
+          sys.exit(bad)
+          PY
+
+      - name: no CRLF in tracked text files
+        run: |
+          if git grep -Il $'\r' -- ':!*.ps1' ; then
+            echo "::error::CRLF found in a tracked file — see .gitattributes"
+            exit 1
+          fi
+
+  install:
+    name: install.sh on ${{ matrix.image }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [ubuntu:24.04, debian:13, fedora:latest, archlinux:latest]
+    container: ${{ matrix.image }}
+    steps:
+      - name: Install prerequisites
+        shell: bash
+        run: |
+          set -eux
+          if command -v apt-get >/dev/null; then
+            apt-get update -qq
+            apt-get install -y -qq zsh git curl tar gzip ca-certificates \
+              tmux less unzip bsdextrautils bsdutils iproute2 fontconfig sudo
+          elif command -v dnf >/dev/null; then
+            dnf install -y -q zsh git curl tar gzip util-linux tmux less unzip \
+              iproute fontconfig findutils sudo
+          elif command -v pacman >/dev/null; then
+            pacman -Sy --noconfirm --needed zsh git curl tar gzip util-linux \
+              tmux less unzip iproute2 fontconfig sudo
+          fi
+          useradd -m rice
+
+      - uses: actions/checkout@v4
+
+      - name: Run install.sh as an unprivileged user
+        shell: bash
+        run: |
+          set -eux
+          cp -a "$GITHUB_WORKSPACE" /home/rice/linux-rice
+          chown -R rice:rice /home/rice
+          # --skip-nvim-plugins: restoring plugins is a separate network budget
+          # and lazy-lock.json already pins them.
+          sudo -u rice -H bash -c \
+            'bash /home/rice/linux-rice/install.sh --skip-nvim-plugins' | tee out.log
+          grep -qx 'RICE INSTALL OK' out.log

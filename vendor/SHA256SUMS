@@ -1,0 +1,12 @@
+6cffed9b4118f18e91111775a0e51aac1fa9f6816c53ab30272246f0d79c9951  oh-my-zsh.tar.gz
+0dcd8ac79732c0d5b136f11f4ee00e581440e16a44eab5b3105b611bbf2cf191  bin/bat-v0.26.1-x86_64-unknown-linux-musl.tar.gz
+5099054dd6a101bd12eb6ff3702a9a6a3f57aaa27923a0da478ae5b517faf335  bin/btop-1.4.7-x86_64-unknown-linux-musl.tar.gz
+f1ea01ca7728ce3462debc359f39dfc7cbbc1a63224b71fefabf92042864aa1b  bin/delta-0.19.2-x86_64-unknown-linux-musl.tar.gz
+5add851e7062c5e56939abb664705e4d14fa2d06289490aff31d51f153832de7  bin/duf_0.9.1_linux_x86_64.tar.gz
+e06eebab74b73d6b7d51a796a353824b001bea82df077706382e100815d28904  bin/eza-0.23.5-x86_64-unknown-linux-musl.tar.gz
+0c51ef6fa3e976eb5038fe0afda38629d3ca07947740bb0e3354c7c4f1238c0c  bin/fastfetch-2.68.1-linux-amd64.tar.gz
+761c72dc8e120d85b22292063be8a796e2eeb20eb3e4f38b8fa2343ccf3514a7  bin/fd-v10.5.0-x86_64-unknown-linux-musl.tar.gz
+4be08018ca37b32518c608741933ea335a406de3558242b60619e98f25be2be1  bin/fzf-0.67.0-linux_amd64.tar.gz
+b2f91117be5b5ea39edd7297156dc2a4a8df4add6c95a90809a8df19e7ab6f52  bin/nvim-0.11.5-linux-x86_64.tar.gz
+33e15bcf1624b25cdd2a55813a47a2f95dbe126268203e76aa6a585d1e7b149c  bin/ripgrep-15.2.0-x86_64-unknown-linux-musl.tar.gz
+4092ee38aa1efde42e4efb2f9c872df5388198aacae7f1a74e5eb5c3cc7f531c  bin/zoxide-0.9.8-x86_64-unknown-linux-musl.tar.gz

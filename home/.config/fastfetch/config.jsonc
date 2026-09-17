@@ -1,0 +1,80 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  // ==========================================================================
+  //  fastfetch — Catppuccin Mocha, wide & short layout
+  //  Small logo + merged rows: ~11 lines tall instead of ~32, and each row
+  //  packs several facts so the horizontal space actually gets used.
+  //  Edit with: ffconf     (tall version kept at config-tall.jsonc)
+  // ==========================================================================
+
+  // "small" = the small built-in ASCII art for whatever distro is detected,
+  // so this config works unchanged on Ubuntu, Debian, Arch, Fedora, ...
+  "logo": {
+    "type": "small",
+    "color": { "1": "38;5;212", "2": "38;5;177" },
+    "padding": { "top": 1, "left": 2, "right": 3 }
+  },
+
+  "display": {
+    "separator": "  ",
+    "color": { "keys": "38;5;177", "title": "38;5;111" },
+    "size": { "ndigits": 1, "maxPrefix": "GB" },
+    "key": { "width": 8 },
+    "percent": {
+      "type": 11,
+      "color": { "green": "38;5;114", "yellow": "38;5;222", "red": "38;5;211" }
+    },
+    "bar": {
+      "char": { "elapsed": "█", "total": "░" },
+      "border": { "left": "", "right": "  " },
+      "width": 10
+    }
+  },
+
+  "modules": [
+    {
+      "type": "title",
+      "key": " ",
+      "format": "\u001b[1;38;5;177m{user-name}\u001b[38;5;242m 󰁔 \u001b[1;38;5;111m{host-name}\u001b[0m"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[38;5;240m ───────────────────────────────────────────────────────────────────\u001b[0m"
+    },
+
+    // Distro + arch + kernel on one row
+    {
+      "type": "command",
+      "key": "   OS",
+      "keyColor": "38;5;212",
+      "text": ". /etc/os-release 2>/dev/null; printf '%s %s  ·  %s' \"$PRETTY_NAME\" \"$(uname -m)\" \"$(uname -r)\""
+    },
+
+    // Uptime + package count + shell + load average on one row
+    {
+      "type": "command",
+      "key": "  󰅐 Up",
+      "keyColor": "38;5;212",
+      "text": "u=$(cut -d. -f1 /proc/uptime); p=$(dpkg-query -f '.\\n' -W 2>/dev/null | wc -l); v=$(${SHELL:-sh} --version 2>/dev/null | cut -d' ' -f1-2); printf '%dd %dh %dm  \u00b7  %s pkgs  \u00b7  %s  \u00b7  load %s' $((u/86400)) $(((u%86400)/3600)) $(((u%3600)/60)) \"$p\" \"${v:-$(basename ${SHELL:-sh})}\" \"$(cut -d' ' -f1-3 /proc/loadavg)\""
+    },
+
+    { "type": "cpu",    "key": "    CPU",  "keyColor": "38;5;216" },
+    { "type": "memory", "key": "    RAM",  "keyColor": "38;5;216" },
+    { "type": "disk",   "key": "  󰋊 Disk", "keyColor": "38;5;216", "folders": "/" },
+
+    // Addresses + gateway + DNS on one row
+    {
+      "type": "command",
+      "key": "  󰩟 Net",
+      "keyColor": "38;5;80",
+      "text": "ip=$(ip -4 -o addr show scope global 2>/dev/null | awk '{print $4}' | paste -sd' '); gw=$(ip -4 route show default 2>/dev/null | awk '{print $3; exit}'); dns=$(awk '/^nameserver/{printf \"%s \", $2}' /etc/resolv.conf 2>/dev/null); printf '%s  ·  gw %s  ·  dns %s' \"$ip\" \"$gw\" \"$dns\""
+    },
+
+    {
+      "type": "colors",
+      "paddingLeft": 3,
+      "symbol": "circle"
+    }
+  ]
+}

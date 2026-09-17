@@ -1,0 +1,107 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  // ==========================================================================
+  //  fastfetch — Catppuccin Mocha
+  //  Palette: mauve 183 · blue 111 · green 151 · yellow 223 · peach 216
+  //           red 211 · teal 116 · sky 117 · lavender 147 · pink 218
+  //  Edit with: ffconf
+  // ==========================================================================
+
+  // No "source": fastfetch auto-detects the running distro's built-in logo.
+  "logo": {
+    "type": "builtin",
+    "color": {
+      "1": "38;5;211",
+      "2": "38;5;183"
+    },
+    "padding": { "top": 3, "left": 2, "right": 5 }
+  },
+
+  "display": {
+    "separator": "  ",
+    "color": { "keys": "38;5;183", "title": "38;5;111" },
+    "size": { "ndigits": 1, "maxPrefix": "GB" },
+    "key": { "width": 13 },
+    "percent": {
+      "type": 11,
+      "color": { "green": "38;5;151", "yellow": "38;5;223", "red": "38;5;211" }
+    },
+    "bar": {
+      "char": { "elapsed": "█", "total": "░" },
+      "border": { "left": "", "right": " " },
+      "width": 14
+    }
+  },
+
+  "modules": [
+    "break",
+
+    {
+      "type": "title",
+      "key": " ",
+      "format": "\u001b[1;38;5;183m{user-name}\u001b[38;5;242m 󰁔 \u001b[1;38;5;111m{host-name}\u001b[0m"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[38;5;240m  ────────────────────────────────────────────────\u001b[0m"
+    },
+
+    // ---- System ------------------------------------------------------------
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;5;218m   SYSTEM  \u001b[38;5;240m───────────────────────────────────\u001b[0m"
+    },
+    { "type": "os",         "key": "    ", "keyColor": "38;5;218", "format": "{pretty-name} {arch}" },
+    { "type": "kernel",     "key": "   󰌢 ", "keyColor": "38;5;218", "format": "{release}" },
+    { "type": "initsystem", "key": "   󰑮 ", "keyColor": "38;5;218" },
+    { "type": "uptime",     "key": "   󰅐 ", "keyColor": "38;5;218" },
+    { "type": "packages",   "key": "   󰏖 ", "keyColor": "38;5;218" },
+    { "type": "shell",      "key": "    ", "keyColor": "38;5;218" },
+    { "type": "terminal",   "key": "    ", "keyColor": "38;5;218" },
+
+    "break",
+
+    // ---- Hardware ----------------------------------------------------------
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;5;216m  󰍛 HARDWARE  \u001b[38;5;240m─────────────────────────────────\u001b[0m"
+    },
+    { "type": "host",     "key": "   󰇄 ", "keyColor": "38;5;216" },
+    { "type": "cpu",      "key": "    ", "keyColor": "38;5;216" },
+    { "type": "cpuusage", "key": "   󰾆 ", "keyColor": "38;5;216", "format": "{avg}" },
+    { "type": "loadavg",  "key": "   󰓅 ", "keyColor": "38;5;216" },
+    { "type": "memory",   "key": "    ", "keyColor": "38;5;216" },
+    { "type": "swap",     "key": "   󰓡 ", "keyColor": "38;5;216" },
+    { "type": "disk",     "key": "   󰋊 ", "keyColor": "38;5;216", "folders": "/" },
+
+    "break",
+
+    // ---- Network -----------------------------------------------------------
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;5;116m  󰩟 NETWORK  \u001b[38;5;240m──────────────────────────────────\u001b[0m"
+    },
+    { "type": "localip", "key": "   󰩠 ", "keyColor": "38;5;116", "showIpv4": true, "showIpv6": false, "compact": true },
+    { "type": "dns",     "key": "   󰇧 ", "keyColor": "38;5;116" },
+
+    "break",
+
+    // ---- Session -----------------------------------------------------------
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;5;147m  󰥔 SESSION  \u001b[38;5;240m──────────────────────────────────\u001b[0m"
+    },
+    { "type": "datetime", "key": "   󰃭 ", "keyColor": "38;5;147", "format": "{year}-{month-pretty}-{day-pretty}   {hour-pretty}:{minute-pretty}" },
+    { "type": "locale",   "key": "   󰗊 ", "keyColor": "38;5;147" },
+    { "type": "editor",   "key": "   󰷈 ", "keyColor": "38;5;147", "format": "{name} {version}" },
+
+    "break",
+    {
+      "type": "colors",
+      "paddingLeft": 3,
+      "symbol": "circle"
+    },
+    "break"
+  ]
+}
