@@ -221,6 +221,7 @@ for t in fastfetch eza bat batcat fd fdfind delta btop duf rg fzf zoxide nvim; d
   # capture everything, then keep line 1 (piping into head would SIGPIPE multi-line
   # outputs like btop's and trip pipefail)
   if v="$("$BIN/$t" --version 2>&1)"; then
+    # shellcheck disable=SC2001  # stripping ANSI needs a regex, not a glob
     printf '    %-9s %s\n' "$t" "$(sed 's/\x1b\[[0-9;]*m//g' <<<"${v%%$'\n'*}")"
   else
     warn "$t does not run"; fail=1
@@ -233,6 +234,7 @@ ff_err="$("$BIN/fastfetch" --pipe false 2>&1 >/dev/null | grep -i error || true)
 # Start a real interactive zsh on a pty; any stderr noise during startup = failure.
 # `script` provides the pty. Without it the probe is skipped, not failed.
 if have script; then
+  # shellcheck disable=SC2016  # this is zsh source; bash must NOT expand it
   probe='print -r -- "PROBE p10k=${+functions[p10k]} hss=${+widgets[history-substring-search-up]} as=${+functions[_zsh_autosuggest_start]} fzftab=${+functions[fzf-tab-complete]} mkdir=$(whence -w mkdir)"'
   zout="$(env -u CLAUDECODE -u TMUX FASTFETCH_SHOWN=1 TERM=xterm-256color \
           script -qfec "zsh -i -c '$probe'" /dev/null 2>&1 | sed 's/\x1b\[[0-9;?]*[a-zA-Z]//g; s/\r//g')"
