@@ -14,7 +14,7 @@ jobs:
     name: Shell + config lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: shellcheck
         run: shellcheck install.sh windows/install-fonts.sh
@@ -80,7 +80,7 @@ jobs:
           fi
           useradd -m rice
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Run install.sh as an unprivileged user
         shell: bash
